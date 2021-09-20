@@ -21,14 +21,14 @@
                 </a>
 
                 <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                    data-target="navbarBasicExample">
+                :class="{ 'is-active': navBarIsActive}" @click="navBarIsActive = !navBarIsActive"data-target="navbarBasicExample">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                 </a>
             </div>
 
-            <div id="navbarBasicExample" class="navbar-menu">
+            <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active': navBarIsActive}" @click="navBarIsActive = !navBarIsActive">
                 <div class="navbar-start">
                     <a class="navbar-item">
                         Home
@@ -101,10 +101,10 @@
 
 
 
-        <article class="message is-warning">
+        <article class="message is-warning" :class="{'is-hidden': !visible2 }" >
             <div class="message-header">
                 <p>Oh No</p>
-                <button class="delete" aria-label="delete"></button>
+                <button class="delete" aria-label="delete" @click="close2()"></button>
             </div>
             <div class="message-body">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque risus mi</strong>, tempus
@@ -127,9 +127,11 @@
         const VM = {                                //view model
             data() {
                 return {
-                    counter: 20,
+                    counter: 3,
                     now: new Date().toLocaleString(),
-                    visible: true
+                    visible: true,
+                    navBarIsActive: false,
+                    visible2: true,
                 }
             },
 
@@ -143,6 +145,9 @@
                 close() {
                     this.visible = false;
 
+                },
+                close2(){
+                    this.visible2=false;
                 }
             }
         }
