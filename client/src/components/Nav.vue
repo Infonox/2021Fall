@@ -12,7 +12,7 @@
         aria-label="menu"
         aria-expanded="false"
         :class="{ 'is-active': isActive }"
-        @click="isActive = !isActive"
+        @onclick="isActive = !isActive"
       >
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -20,17 +20,22 @@
       </a>
     </div>
 
-    <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active': isActive }">
+    <div
+      id="navbarBasicExample"
+      class="navbar-menu"
+      :class="{ 'is-active': isActive }"
+    >
       <div class="navbar-start">
-        <a class="navbar-item"> Home </a>
+        <a class="navbar-item" href="/"> Home </a>
 
         <a class="navbar-item"> Documentation </a>
+        <a class="navbar-item" href="/feed"> Feed </a>
 
-        <div class="navbar-item has-dropdown is-hoverable">
+        <div class="navbar-item has-dropdown is-hoverable"> <!---Wont show up in safari?-->
           <a class="navbar-link"> More </a>
 
           <div class="navbar-dropdown">
-            <a class="navbar-item"> About </a>
+            <a class="navbar-item" href="/about"> About </a>
             <a class="navbar-item"> Jobs </a>
             <a class="navbar-item"> Contact </a>
             <hr class="navbar-divider" />
@@ -40,13 +45,11 @@
       </div>
 
       <div class="navbar-end">
+
         <div class="navbar-item">
-          <div class="buttons">
-            <a class="button is-primary">
-              <strong>Sign up</strong>
-            </a>
-            <a class="button is-light"> Log in </a>
-          </div>
+          <LoginBadge/>
+        
+          
         </div>
       </div>
     </div>
@@ -54,7 +57,7 @@
 </template>
 
 <script>
-//import LoginBadge from "./LoginBadge.vue";
+import LoginBadge from './LoginBadge';
 
 export default {
   data() {
@@ -65,7 +68,7 @@ export default {
     };
   },
   components: {
-    //LoginBadge,
+    LoginBadge,
   },
 };
 </script>
