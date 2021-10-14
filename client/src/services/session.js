@@ -1,28 +1,23 @@
+import router from "../router";
+
 const session = {
     user: null,
     messages: [],
-    Login(email, password){
+    toRoute: '/feed',
+    Login(email, password) {
 
-        this.user ={
+        this.user = {
+            FirstName: 'Moshe',
+            LastName: email,
+            Password: password,
+            id: 613,
+        }
 
-           
+        router.push(this.toRoute);
 
-                
-                    FirstName : 'Henry',
-                    LastName: 'Maldonado',
-                    Password: password,
-                    Email: email,
-                    id: 613
-
-
-                }
-            }
-            
-        
-    
-
-
+    }
 };
 
 export default session;
 
+//export function
