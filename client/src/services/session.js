@@ -4,7 +4,7 @@ const session = {
     user: null,
     messages: [],
     toRoute: '/feed',
-    Login(email, password) {
+    Login(email, password){
 
         this.user = {
             FirstName: 'Moshe',
@@ -21,3 +21,4 @@ const session = {
 export default session;
 
 //export function
+
