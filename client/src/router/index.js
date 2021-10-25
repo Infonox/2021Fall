@@ -14,7 +14,7 @@ const routes = [
     path: '/feed',
     name: 'Feed',
     component: Feed, //this requires the import at the top of the index.js
-    //meta: {requiresLogin: true}
+    meta: {requiresLogin: true}
   },
   {
     path: '/login',
