@@ -6,7 +6,7 @@ const app = express.Router();
 
 app
 .get("/", (req, res, next)=>{
-    res.send(models.GetAll());
+    res.send(models.getAll());
 
 })
 .get("/search", (req, res, next)=>{
@@ -14,8 +14,17 @@ app
 
 })
 .get("/:id", (req, res, next)=>{
+    console.log(req.headers);
     res.send(models.Get(req.params.id));
 
+    
+})
+.post("/",(req,res,next)=>{
+  
+    
+  
+    const newPost = models.Add(req.body)
+    res.status(201).send(newPost);
 })
 
 module.exports = app;
