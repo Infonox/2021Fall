@@ -31,4 +31,7 @@ https://api.nasa.gov/planetary/apod?api_key=te2AWQonPBWdmeQwm3eutLVyZ1eAZbHBWeFv
 ###
 http://localhost:3100/posts/search?q=the
 
+###
+POST http://localhost:3100/posts
+
 
