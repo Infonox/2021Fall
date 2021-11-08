@@ -5,11 +5,31 @@ const app = express.Router();
 
 
 app
-.get("/", (req, res, next)=>{
-    res.send(models.GetAll());
 
-}).get("/:user_id", (req, res, next)=>{
-    res.send(models.Get(req.params.user_id));
+/*.get("/async", async (req, res, next)=>{
+    console.log("Outer function: 1");
+   models.Async();
+   res.send("Done!");
+   console.log("Outer function: 2");
+})*/
+
+
+
+
+.get("/", (req, res, next)=>{
+    models.GetAll()
+    .then(user=>{
+        res.send(user);
+    })
+    .catch(next);
+
+})
+.get("/:user_id", (req, res, next)=>{
+    models.get(req.params.user_id)
+    .then(user=>{
+        res.send(user);
+    })
+    .catch(next);
 
 })
 .post("/Login", (req,res,next) =>{
@@ -23,7 +43,6 @@ app
     
 })
 .post("/register", (req,res,next) =>{
-     const user=req.body;
      models.Add(req.body)
      .then(user => {
         res.status(201).send(user);
@@ -33,7 +52,20 @@ app
         
        
 
-    });
+})
+.post("/seed", (req,res,next) =>{
+    models.Seed()
+        .then(user => {
+            res.status(201).send("Created");
+    
+         })
+         .catch(next)
+})
+
+    
+
+    
+
 
     
 

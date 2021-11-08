@@ -13,15 +13,18 @@ const app = express();
 const port = process.env.PORT || 3100;
 
 app
-.use('/', express.static(path.join(__dirname, '../docs')))
+
 .use(express.json())
 .use('/users', usersController)
 .use('/posts', postsController)
+
+.use('/', express.static(path.join(__dirname, '../docs')))
 
 app
 .get('*',(req,res) => res.sendFile(path.join(__dirname, '../docs/index.html')))
 
 .use((err,req,res,next) =>{
+    console.error(err);
     res.status(err.code || 500).send(err);
 })
 
@@ -29,6 +32,3 @@ app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
 
-async function PostsCollection(){
-    
-}

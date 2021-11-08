@@ -3,6 +3,9 @@
  */
 
 const bcrypt = require('bcrypt');
+const {result} = require('lodash');
+const {client} = require('./mongo');
+const collection = client.db(process.env.MONGO_DB).collection('users');
 
 
 
@@ -50,27 +53,25 @@ const list = [
 
 ];
 
-module.exports.GetAll = function GetAll() { return list; }
-module.exports.Get = user_id => list[user_id];
+module.exports.GetAll = function GetAll() { return collection.find().toArray() ; }
+module.exports.Get = user_id => collection.findOne({_id: user_id})
 
 module.exports.GetByHandle = function GetByHandle(handle) { return ({ ...list.find(x => x.handle == handle), password: undefined }); }
-module.exports.Add = function Add(user) {
+module.exports.Add = async function Add(user) {
     if (!user.firstName) {
         return Promise.reject({ code: 422, msg: "First Name is required" })
     }
 
-    //user.password = hash(user.password);
-
-    return bcrypt.hash(user.password, +process.env.SALT_ROUNDS)
-        .then(hash =>{
-            
-      
+    //user.password = hash(user.password); //CHECK WITH PROFESSOR
+     const hash = await bcrypt.hash(user.password, +process.env.SALT_ROUNDS)
     
-        user.password = hash;
+       user.password = hash;
 
-        list.push(user);
-        return  { ...user, password: undefined };
-    })
+        //list.push(user);
+        const user2 = await collection.insertOne(user);
+     
+        user._id =  user2.insertedId;
+
 
 }
 
@@ -99,16 +100,13 @@ module.exports.Delete = function Delete(user_id) {
     return user;
 }
 
-module.exports.Login = function Login(handle, password) {
+module.exports.Login = async function Login(handle, password) {
     console.log({ handle, password })
-    const user = list.find(x => x.handle == handle);
+    const user = await collection.findOne({handle})
     if (!user) {
         return Promise.reject({ code: 401, msg: "Sorry there is no user with that handle" });
     }
-
-    return bcrypt.compare(password, user.password)
-
-        .then(result => {
+    const result=await bcrypt.compare(password, user.password)
 
             if (!result) {
                 throw { code: 401, msg: "Wrong Password" };
@@ -122,7 +120,25 @@ module.exports.Login = function Login(handle, password) {
             return { user: data };
 
 
-        })
+       
 
 
 }
+
+module.exports.Seed = async ()=>{
+    for (const x of list) {
+
+        await module.exports.Add(x);
+        
+    }
+    
+}
+/*module.exports.Async = async () =>{
+
+    console.log("Inner function: 1");
+
+    await Promise.resolve();
+
+    console.log("Inner function: 2");
+
+}*/
