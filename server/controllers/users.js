@@ -24,12 +24,18 @@ app
     .catch(next);
 
 })
-.get("/:user_id", (req, res, next)=>{
-    models.get(req.params.user_id)
-    .then(user=>{
-        res.send(user);
-    })
-    .catch(next);
+.patch("/:user_id", (req, res, next) =>{
+
+    models   .Update(req.params.user_id, req.body)
+             .then( user=> res.send(user) )
+             .catch(next) 
+
+})
+.delete("/:user_id", (req, res, next) =>{
+
+    models   .Delete(req.params.user_id)
+             .then( user=> res.send({ deleted: user }) )
+             .catch(next) 
 
 })
 .post("/Login", (req,res,next) =>{
