@@ -1,8 +1,10 @@
 <template>
   <div class="card">
   <div class="card-image">
+    <button class="delete"></button>
     <figure class="image is-4by3">
       <img :src="post.src" :alt="post.alt">
+      <button class="delete" @click="$emit('remove')"></button>
     </figure>
   </div>
   <div class="card-content">
@@ -43,4 +45,9 @@ export default {
 </script>
 
 <style>
+button.delete{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
 </style>
