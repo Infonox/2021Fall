@@ -5,12 +5,12 @@ export function GetAll() {
 }
 
 export function GetWall(handle) {
-    return api('/posts/wall/' + handle);
+    return api('posts/wall/' + handle);
 }
 
 export function GetFeed(handle) { 
 
-    return api('/posts/feed/' + handle);
+    return api('posts/feed/' + handle);
 
 }
 
@@ -18,12 +18,12 @@ export function GetFeed(handle) {
 export function Get(post_id) { return api('posts/' + post_id); }
 export function Add(post) {
   
-     return { ...post };
+     return api('posts', post);
 }
 export function Update(post_id, post) {
    
     return {post_id, post};
 }
 export function Delete(post_id) {
-   return api('/posts' + post_id, {}, 'DELETE')
+   return api('posts/' + post_id, {}, 'DELETE')
 } 
